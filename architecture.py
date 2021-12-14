@@ -28,9 +28,9 @@ def Net():
 	y_hat = keras.layers.Dense(1283, activation='softmax', name='output')(add_1)
 	model = keras.Model(inputs=x, outputs=y_hat)
 	# summarize layers
-	#print(model.summary())
+	# print(model.summary())
 	# plot graph
-	#plot_model(model, to_file='model_architecture.png')
+	# plot_model(model, to_file='model_architecture.png')
 
 	return model
 
