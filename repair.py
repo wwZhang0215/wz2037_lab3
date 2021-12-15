@@ -44,12 +44,14 @@ def cal_accuracy(model, x_test, y_test):
     return accuracy
 
 
-def cal_asr(bd_model, prune_model):
+def cal_plot_data(bd_model, prune_model):
+    cl_x_test, cl_y_test = data_loader('data/test.h5')
     bd_x_test, bd_y_test = data_loader('data/bd_test.h5')
-
+    cl_label_p = np.argmax(prune_model.predict(cl_x_test), axis=1)
+    clean_accuracy = np.mean(np.equal(cl_label_p, cl_y_test)) * 100
     bd_label_p = G(bd_model, prune_model, bd_x_test, bd_y_test)
     asr = np.mean(np.equal(bd_label_p, bd_y_test)) * 100
-    return asr
+    return clean_accuracy, asr
 
 
 def plot(clean_accuracy, asr):
@@ -108,10 +110,10 @@ def main(X):
 
     clean_accuracy = cal_accuracy(bd_model, x_data, y_data)
     print('Clean Classification accuracy:', clean_accuracy)
-    asr = cal_asr(bd_model, B_pi_model)
+    clean, asr = cal_plot_data(bd_model, B_pi_model)
     prune_accuracy = clean_accuracy
 
-    clean_accuracy_set = [prune_accuracy]
+    clean_accuracy_set = [clean]
     asr_set = [asr]
     output = 0
 
@@ -119,7 +121,7 @@ def main(X):
         if sum_by_channel[channel] == 0:
             weights[4][..., channel] = 0
             weights[5][channel] = 0
-            clean_accuracy_set.append(prune_accuracy)
+            clean_accuracy_set.append(clean)
             asr_set.append(asr)
             continue
         weights[4][..., channel] = 0
@@ -127,10 +129,10 @@ def main(X):
         B_pi_model.set_weights(weights)
         # print(B_pi_model.get_weights()[5])
         prune_accuracy = cal_accuracy(B_pi_model, x_data, y_data)
-        asr = cal_asr(bd_model, B_pi_model)
+        clean, asr = cal_plot_data(bd_model, B_pi_model)
         print(prune_accuracy)
 
-        clean_accuracy_set.append(prune_accuracy)
+        clean_accuracy_set.append(clean)
         asr_set.append(asr)
 
         if (clean_accuracy - prune_accuracy) > X[output]:
@@ -148,5 +150,5 @@ def main(X):
 
 
 if __name__ == '__main__':
-    main([0.02, 0.04, 0.10])
+    main([0.02, 0.04, 0.10, 0.30])
     # test()

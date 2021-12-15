@@ -46,7 +46,7 @@
 Please use only clean validation data (valid.h5) to design the pruning defense. And use test data (test.h5 and bd_test.h5) to evaluate the models. 
 
 ## V. Repair Network
-  1. Repaired network for X={2%, 4%, 10%} is created by script *`repair.py`*, and output models are stored in *`models/B_pi_net_0.02.h5 models/B_pi_net_0.04.h5 models/B_pi_net_0.1.h5`* 
+  1. Repaired network for X={2%, 4%, 10%, 30%} is created by script *`repair.py`*, and output models are stored in *`models/B_pi_net_0.02.h5 models/B_pi_net_0.04.h5 models/B_pi_net_0.1.h5`* 
   2. To evaluate the goodnet *G*, excute *`Geval.py`* by running:
   
      `python3 eval.py <clean validation data directory> <poisoned validation data directory> <B model directory> <B' model dirctory>`.
@@ -59,16 +59,21 @@ Please use only clean validation data (valid.h5) to design the pruning defense. 
 
      `python3 eval.py data/test.h5 data/bd_test.h5 models/bd_net.h5 models/B_pi_net_0.1.h5`.
 
+     `python3 eval.py data/test.h5 data/bd_test.h5 models/bd_net.h5 models/B_pi_net_0.3.h5`.
+
   3. Evaluation results are:
 
-     - `B_pi_net_0.02.h5` : `Clean Classification accuracy`: 95.90023382696803
+      - `B_pi_net_0.02.h5` : `Clean Classification accuracy`: 95.90023382696803
 `Attack Success Rate`: 100.0
 
-     - `B_pi_net_0.04.h5` : `Clean Classification accuracy`: 92.29150428682775
+      - `B_pi_net_0.04.h5` : `Clean Classification accuracy`: 92.29150428682775
 `Attack Success Rate`: 99.98441153546376
 
-     - `B_pi_net_0.1.h5` : `Clean Classification accuracy`: 84.54403741231489
+      - `B_pi_net_0.1.h5` : `Clean Classification accuracy`: 84.54403741231489
 `Attack Success Rate`: 77.20966484801247
+
+      - `B_pi_net_0.3.h5` : `Clean Classification accuracy`: 54.762275915822286
+`Attack Success Rate`: 6.96024941543258
 
   4. Plot:
     
@@ -79,3 +84,7 @@ Please use only clean validation data (valid.h5) to design the pruning defense. 
      - Attack success rate:
 
      ![](asr.png)
+
+  5. Comment:
+  
+      Pruning defense does not work for this model. For the defensive part, the attack success rate drop to a very low point. However, the clean classification accuracy also drop significantly. When attack success rate drop to a acceptable rate, the clean classification accuracy is too low to consider the model as a usable model. Therefore pruning defense dose not work for this model.
