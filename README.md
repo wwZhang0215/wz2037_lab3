@@ -53,13 +53,13 @@ Please use only clean validation data (valid.h5) to design the pruning defense. 
      
      For each repaired network, corresponding commands are:
 
-     `python3 eval.py data/test.h5 data/bd_test.h5 models/bd_net.h5 models/B_pi_net_0.02.h5`.
+     `python3 Geval.py data/test.h5 data/bd_test.h5 models/bd_net.h5 models/B_pi_net_0.02.h5`.
 
-     `python3 eval.py data/test.h5 data/bd_test.h5 models/bd_net.h5 models/B_pi_net_0.04.h5`.
+     `python3 Geval.py data/test.h5 data/bd_test.h5 models/bd_net.h5 models/B_pi_net_0.04.h5`.
 
-     `python3 eval.py data/test.h5 data/bd_test.h5 models/bd_net.h5 models/B_pi_net_0.1.h5`.
+     `python3 Geval.py data/test.h5 data/bd_test.h5 models/bd_net.h5 models/B_pi_net_0.1.h5`.
 
-     `python3 eval.py data/test.h5 data/bd_test.h5 models/bd_net.h5 models/B_pi_net_0.3.h5`.
+     `python3 Geval.py data/test.h5 data/bd_test.h5 models/bd_net.h5 models/B_pi_net_0.3.h5`.
 
   3. Evaluation results are:
 
